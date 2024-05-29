@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card-body">
+        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+        
+          <p>Nombre total personnel : {{ olonaCount }}</p>
+            <table class="table my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Modifier</th>
+                        <th>Supr</th>
+                        <!--th>+++</th-->
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let olona of listeOlona" >
+                        <td>{{ olona.nom }}</td>
+                        <td>{{ olona.prenom }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" (click)="olona.id !== undefined && olona.id !== null ? versUpdate(olona.id) : null">Update</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" (click)="olona.id !== undefined ? deleteOlona(olona.id) : null">Delete</button>
+                        </td>
+
+                      </tr>
+
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+        </div>
+        <button class="btn btn-primary" type="button" (click)="insertOlona()">Ajouter à nouveau</button>
+        <hr>
+        <button class="btn btn-primary" type="button" (click)="prevPage()" [disabled]="currentPage === 0">Page précédente</button>
+        <button class="btn btn-primary" type="button" (click)="nextPage()" [disabled]="currentPage === olonaCount / pageSize - 1">Page suivante</button>
+        
+    </div>
+
+</body>
+</html>
+
+
