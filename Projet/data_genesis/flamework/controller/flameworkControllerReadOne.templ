@@ -1,0 +1,14 @@
+public ResponseREST getById(int id) throws Exception{
+    ResponseREST response = new ResponseREST();
+    Connection connex=dao.getconnection();
+    try{
+        [classNameMaj] where=new [classNameMaj](id);
+        response.setData(where.findAll(connex).get(0));
+        response.setMessage("success");
+    }catch (Exception e) {
+         response.setMessage(e.getMessage());
+    }finally{
+        connex.close();
+    }
+    return response;
+}

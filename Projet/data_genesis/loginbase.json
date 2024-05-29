@@ -1,0 +1,30 @@
+{
+    "addLogin" : true,
+    "tableExists" : false,
+    "nameTable" : "login",
+    "columnReference": [
+        "email",
+        "passwords"
+    ],
+    "columnReferenceType":[
+        "text",
+        "passwords"
+    ],
+    "scripts" :{
+        "createTable": [
+            "create table login ( id_user serial primary key, email varchar(70) not null, passwords varchar(20) not null, role int default 0)"
+        ],
+        "insert" : [
+            "INSERT INTO  login (email, passwords, role) VALUES ('user', 'user', 0)",
+            "INSERT INTO login (email, passwords, role) VALUES ('admin', 'admin', 1)"
+        ]
+    },
+    "viewServiceContent":"vuejs/services/ServiceLogin",
+    "viewContraiteCallContent":"vuejs/services/CallContraiteService",
+    "viewImportLogout": "import Logout from \"../pages/views/Logout.vue\"",
+    "viewLogoutContent":"vuejs/vue/LogoutContent",
+    "viewRouteLogin":"vuejs/routes/RouteLogin",
+    "viewSidebarContent":"vuejs/sidebar/ChildrenSidebarLogin",
+    "viewLoginPrincipaletemplate":"vuejs/vue/PrincipaleTemplateLogin",
+    "viewLoginSaveContent":"vuejs/vue/SaveLoginTemplate"
+}

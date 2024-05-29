@@ -1,0 +1,14 @@
+public ResponseREST getCount() throws Exception{
+    ResponseREST response = new ResponseREST();
+    [classNameMaj] obj = new [classNameMaj]();
+    Connection connex=dao.getconnection();
+    try{
+       response.setData(obj.getCount(connex));
+        response.setMessage("success");
+    }catch (Exception e) {
+        response.setMessage(e.getMessage());
+    }finally{
+        connex.close();
+    }
+    return response;
+}

@@ -1,0 +1,18 @@
+public ResponseREST login(@FromBody [classNameMaj] entity) throws Exception{
+    ResponseREST response = new ResponseREST();
+    Connection connex=dao.getconnection();
+    try{
+        if((entity.findAll(connex)).size() != 0){
+            response.setData((entity.findAll(connex)).get(0));
+        }else{
+            response.setData(false);   
+        }
+        response.setMessage("success");
+    }catch (Exception e) {
+        connex.rollback();
+        response.setMessage(e.getMessage());
+    }finally{
+        connex.close();
+    }
+    return response;
+}

@@ -1,0 +1,16 @@
+public ResponseREST delete( int id) throws Exception{
+    ResponseREST response = new ResponseREST();
+    Connection connex=dao.getconnection();
+    try{
+        [classNameMaj] where=new [classNameMaj](id);
+        where.delete(connex);
+        response.setMessage("Delete success");
+        connex.commit();
+    }catch (Exception e) {
+        connex.rollback();
+        response.setMessage(e.getMessage());
+    }finally{
+        connex.close();
+    }
+    return response;
+}

@@ -1,0 +1,15 @@
+public ResponseREST insert(@FromBody [classNameMaj] entity) throws Exception{
+    ResponseREST response = new ResponseREST();
+    Connection connex=dao.getconnection();
+    try{
+        entity.create(connex);
+        response.setMessage("save success");
+        connex.commit();
+    }catch (Exception e) {
+        connex.rollback();
+        response.setMessage(e.getMessage());
+    }finally{
+        connex.close();
+    }
+    return response;
+}

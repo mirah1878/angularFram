@@ -1,0 +1,16 @@
+public ResponseREST update(@FromUrl(value="id") int id, @FromBody [classNameMaj] entity) throws Exception{
+    ResponseREST response = new ResponseREST();
+    [classNameMaj] where=new [classNameMaj](id);
+    Connection connex=dao.getconnection();
+    try{
+        where.update(connex, entity);
+        response.setMessage("update success");
+        connex.commit();
+    }catch (Exception e) {
+        connex.rollback();
+        response.setMessage(e.getMessage());
+    }finally{
+        connex.close();
+    }
+    return response;
+}

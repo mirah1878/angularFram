@@ -1,0 +1,247 @@
+[
+    {
+        "id":1,
+        "nom":"Java Flamework",
+        "syntax":{
+            "namespace":"package",
+            "namespaceStart":";",
+            "namespaceEnd":""
+        },
+        "types":{
+            "int":"Integer",
+            "double":"Double",
+            "string":"String",
+            "date":"java.sql.Date",
+            "timestamp":"java.time.LocalDateTime",
+            "long":"Long"
+        },
+        "typeParsers":{
+            "Integer":"Integer.parseInt([value])",
+            "Double":"Double.parseDouble([value])",
+            "String":"[value]",
+            "java.sql.Date":"java.time.LocalDate.parse([value])",
+            "java.time.LocalDateTime":"java.time.LocalDateTime.parse([value])",
+            "Long":"Long.parseLong([value])"
+        },
+        "skeleton":"flamework_skeleton",
+        "projectNameTags":[
+            "[projectNameMaj]/web/WEB-INF/web.xml",
+            "[projectNameMaj]/web/index.html",
+            "[projectNameMaj]/execute.bat"
+        ],
+        "additionnalFiles":[],
+        "model":{
+            "modelImports":[
+                "import etu1789.dao.Generic2;",
+                "import etu1789.dao.annotation.Column;",
+                "import etu1789.dao.annotation.Table;",
+                "import etu1789.dao.annotation.ForeignKey;"
+            ],
+            "modelExtends":"extends Generic2",
+            "modelAnnotations":[
+                "@Table(libelle = \"[tableName]\", base = \"postgresql\")"
+            ],
+            "modelPrimaryFieldAnnotations":[
+                "@Column(libelle = \"[columnName]\", primaryKey = true)"
+            ],
+            "modelForeignFieldAnnotations":[
+                "@ForeignKey(libelle = \"[columnNameForeign]\", type = Integer.class)"
+            ],
+            "modelFieldAnnotations":[
+                "@Column(libelle = \"[columnName]\")"
+            ],
+            "modelFieldCase":"Min",
+            "modelFieldContent":"private [fieldType] [fieldName[modelFieldCase]];",
+            "modelGetter":"public [fieldType] get[fieldNameMaj](){ return [fieldName[modelFieldCase]]; }",
+            "modelSetter":"public void set[fieldNameMaj]([fieldType] o){ [fieldName[modelFieldCase]]=o; }",
+            "modelConstructors":[
+                "public [classNameMaj](){}",
+                "public [classNameMaj]([primaryFieldType] o){ [primaryFieldName[modelFieldCase]]=o; }"
+            ],
+            "modelSavePath":"[projectNameMaj]/src/models",
+            "modelAdditionnalFiles":[],
+            "modelExtension":"java",
+            "modelPackage":"models",
+            "modelTemplate":"ModelTemplate"
+        },
+        "controller":{
+            "controllerImports":[
+                "import etu1789.framework.annotation.AnnotationScop;",
+                "import etu1789.framework.annotation.AnnotationUrl;",
+                "import etu1789.framework.annotation.FromBody;",
+                "import etu1789.framework.annotation.FromHeader;",
+                "import etu1789.framework.annotation.FromUrl;",
+                "import etu1789.framework.annotation.RestApi;",
+                "import etu1789.framework.upload.FileUpload;",
+                "import etu1789.dao.connexion.Connexion_projet;",
+                "import java.sql.Connection;",
+                "import models.[classNameMaj];",
+                "import etu1789.framework.response.ResponseREST;"
+            ],
+            "controllerAnnotations":[
+                "@AnnotationScop(scop = \"singleton\")"
+            ],
+            "controllerExtends":"",
+            "controllerName":"[classNameMaj]Controller",
+            "controllerFields":[
+                {
+                    "controllerFieldAnnotations":[],
+                    "controllerFieldContent":"private Connexion_projet dao=new Connexion_projet(\"[databaseName]\", \"[databaseHost]\", \"[databasePort]\", \"[user]\", \"[pwd]\");"
+                }
+            ],
+            "controllerChangeInstanciation":{
+                "template":"o.set[fieldNameMaj]([content]);",
+                "value":"entity.getData().get(\"[fieldNameMin]\")"
+            },
+            "controllerWhereInstanciation":{
+                "template":"where.set[primaryNameMaj]([content]);",
+                "value":"entity.getData().get(\"[primaryNameMin]\")"
+            },
+            "controllerForeignInstanciation":{
+                "template":"o.set[fieldNameMaj](new [projectNameMin].entities.[foreignType]([content]));",
+                "value":"entity.getData().get(\"[fieldNameMin]\")"
+            },
+            "controllerForeignList":"[projectNameMin].entities.[foreignType][] [foreignNameMin]=dao.select(connex, [projectNameMin].entities.[foreignType].class);\nmodel.addItem(\"[foreignNameMin]s\", [foreignNameMin]);",
+            "controllerForeignContextParam" : "",
+            "controllerForeignContextInstanciation" : "",
+            "controllerConstructors":[],
+            "controllerForeignInclude":"",
+            "controllerMethods":[
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"POST\", params = true)",
+                        "@AnnotationUrl(url = \"[classNameMin]\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkControllerInsert"
+                },
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"GET\", params = false)",
+                        "@AnnotationUrl(url = \"[classNameMin]\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkControllerRead"
+                },
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"PUT\", params = true)",
+                        "@AnnotationUrl(url = \"[classNameMin]\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkControllerUpdate"
+                },
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"DELETE\", params = true)",
+                        "@AnnotationUrl(url = \"[classNameMin]\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkControllerDelete"
+                },
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"GET\", params = true)",
+                        "@AnnotationUrl(url = \"[classNameMin]\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkControllerReadOne"
+                },
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"GET\", params = true)",
+                        "@AnnotationUrl(url = \"[classNameMin]Paging\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkControllerReadPaging"
+                }
+                ,
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"GET\", params = false)",
+                        "@AnnotationUrl(url = \"[classNameMin]Count\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkControllerCount"
+                },
+                {
+                    "controllerMethodAnnotations":[
+                        "@RestApi(method = \"POST\", params = true)",
+                        "@AnnotationUrl(url = \"loginVue\")"
+                    ],
+                    "controllerMethodContent":"flamework/controller/flameworkLoginFunction"
+                }
+                
+                
+            ],
+            "controllerSavepath":"[projectNameMaj]/src/controllers",
+            "controllerExtension":"java",
+            "controllerPackage":"controllers",
+            "controllerTemplate":"ControllerTemplate",
+            "controllerNameSuffix":"Controller"
+        },
+        "view":{
+            "viewName":"[classNameMaj]",
+            "viewContent":"vuejs/vue/PrincipaleTemplate",
+            "viewSavePath":"[projectNameMaj]/src/pages/views",
+            "viewExtension":"vue",
+            "viewTableContent":"vuejs/vue/TableTemplate",
+            "viewComponentSavePath": "[projectNameMaj]/src/components/info",
+            "viewImportService":"import [classNameMaj]Service from '../../service/[classNameMaj]Service';",
+            "viewTableLine":"<md-table-cell md-label=\"[Lable]\">{{ item.[fieldNameMin] }}</md-table-cell>",
+            "tableName":"Table[classNameMaj]",
+            "saveName":"Save[classNameMaj]",
+            "viewExportComponentName": "index",
+            "viewExportComponentExtension": "js",
+            "viewExportComponentContent":"vuejs/vue/ExportComponent",
+            "viewExportComponentSavePath": "[projectNameMaj]/src/components",
+            "viewExportComponentImport": "import [importComponent] from '@/components/Info/[importComponent]'",
+            "viewListOption":"<md-option v-for=\"dt in [classNameMin]Foreignkey\" :key=\"dt.[primaryKey]\" :value=\"dt.[primaryKey]\">{{ dt.[fieldMin] }}</md-option>",
+            "viewAppleForeignKey" : "this.[classNameMin]Foreignkey = await [classNameMaj]Service.get();",
+            "viewSaveComponent" : "vuejs/vue/Savetemplate",
+            "viewCallForeignkeyComponent":"vuejs/vue/CallForeignKey",
+            "viewModalModifContent": "vuejs/vue/ModalTemplate",
+            "viewRedirect":" this.$router.push({ name: \" [urlRedirect]  \" });",
+            "templateInsert":{
+                "inputComponent": "vuejs/vue/component/InsertInput",
+                "textareaComponent": "vuejs/vue/component/InsertTextarea",
+                "listComponent": "vuejs/vue/component/InsertList",
+                "types":{
+                    "Integer": "number",
+                    "String": "text",
+                    "java.sql.Date":"date",
+                    "Double": "number",
+                    "java.time.LocalDateTime": "date",
+                    "text": "text"
+                },
+                "typesComponent":{
+                    "Integer": "vuejs/vue/component/InsertNumber",
+                    "String": "vuejs/vue/component/InsertInput",
+                    "java.sql.Date":"vuejs/vue/component/InsertDate",
+                    "Double": "vuejs/vue/component/InsertNumber",
+                    "java.time.LocalDateTime": "vuejs/vue/component/InsertInput",
+                    "text": "vuejs/vue/component/InsertTextarea"
+                }
+            },
+            "service":{
+                "serviceName":"[classNameMaj]Service",
+                "serviceExtension": "js",
+                "serviceContent": "vuejs/services/ServicesTemplate",
+                "serviceSavePath": "[projectNameMaj]/src/service"
+            },
+            "routes":{
+                "routesName":"routes",
+                "routeContent": "vuejs/routes/RouteTemplate",
+                "routeContentChildren": "vuejs/routes/ChildrenRoute",
+                "routeContentImport":"vuejs/routes/RouteImport",
+                "routeExtension": "js",
+                "routeSavePath": "[projectNameMaj]/src/routes"
+            },
+            "sidebar":{
+                "sidebarName":"DashboardLayout",
+                "sidebarExtension": "vue",
+                "sidebarContent": "vuejs/sidebar/Sidebartemplate",
+                "sidebarContentChildren": "vuejs/sidebar/ChildrenSidebar",
+                "sidebarSavePath": "[projectNameMaj]/src/pages/Layout"
+            }
+        },
+        "customChanges":[],
+        "navbarLinks":{
+            "path":"[projectNameMaj]/web/pages/layout/layout.jsp",
+            "link":"<a href=\"/[projectNameMaj]/tocrud[classNameMin].do\" class=\"nav-item nav-link\"><i class=\"fa fa-tachometer-alt me-2\"></i>[classNameformattedMaj]</a>"
+        }   
+    }
+]

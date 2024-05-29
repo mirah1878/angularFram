@@ -1,0 +1,14 @@
+public ResponseREST getPaging(@FromUrl(value="limit") int limit, @FromUrl(value="offset") int offset) throws Exception{
+    ResponseREST response = new ResponseREST();
+    Connection connex=dao.getconnection();
+    try{
+        [classNameMaj] where=new [classNameMaj]();
+        response.setData(where.findPaging(connex, limit, offset));
+        response.setMessage("success");
+    }catch (Exception e) {
+         response.setMessage(e.getMessage());
+    }finally{
+        connex.close();
+    }
+    return response;
+}
